@@ -35,6 +35,14 @@
     "vnetPrefix": "10.1.0.0/16",
     "vnetSubnet1Name": "DC-Subnet-1",
     "vnetSubnet1Prefix": "10.1.0.0/24",
+
+    "vnetSubnet2Name": "EMIR-Subnet-2",
+    "vnetSubnet2Prefix": "10.1.1.0/24",
+    "vnetSubnet3Name": "RDS-Subnet-3",
+    "vnetSubnet3Prefix": "10.1.2.0/24",
+    "vnetSubnet4Name": "RDSGWAY-Subnet-4",
+    "vnetSubnet4Prefix": "10.1.3.0/24",
+
     "ImageOffer": "WindowsServer",
     "ImagePublisher": "MicrosoftWindowsServer",
     "DCVmSize": "Standard_DS1_v2",
@@ -45,10 +53,10 @@
     "DC01StaticIp": "10.1.0.10",
     "DC02StaticIp": "10.1.0.20",
     "DNSServerAddress": [
-        "10.1.0.10",
-        "10.1.0.20"
-      ]
-     
+      "10.1.0.10",
+      "10.1.0.20"
+    ]
+
   },
 
   "resources": [
@@ -71,18 +79,36 @@
         "dhcpOptions": {
           "dnsServers": "[variables('DNSServerAddress')]"
         },
-          "subnets": [
-            {
-              "name": "[variables('vnetSubnet1Name')]",
-              "properties": {
-                "addressPrefix": "[variables('vnetSubnet1Prefix')]"
-              }
+        "subnets": [
+          {
+            "name": "[variables('vnetSubnet1Name')]",
+            "properties": {
+              "addressPrefix": "[variables('vnetSubnet1Prefix')]"
             }
+          },
 
+          {
+            "name": "[variables('vnetSubnet2Name')]",
+            "properties": {
+              "addressPrefix": "[variables('vnetSubnet2Prefix')]"
+            }
+          },
+          {
+            "name": "[variables('vnetSubnet3Name')]",
+            "properties": {
+              "addressPrefix": "[variables('vnetSubnet3Prefix')]"
+            }
+          },
+          {
+            "name": "[variables('vnetSubnet4Name')]",
+            "properties": {
+              "addressPrefix": "[variables('vnetSubnet4Prefix')]"
+            }
+          }
 
-          ]
-        }
-      },
+        ]
+      }
+    },
 
     {
       "name": "domaincontrollersAS",
@@ -103,7 +129,6 @@
 
       }
     },
-
     {
       "name": "[variables('DC01NicName')]",
       "type": "Microsoft.Network/networkInterfaces",
@@ -114,7 +139,7 @@
       ],
       "tags": {
         "displayName": "DC01Nic",
-        "Enviroment":  "Production"
+        "Enviroment": "Production"
       },
       "properties": {
         "ipConfigurations": [
